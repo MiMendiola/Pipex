@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:18:19 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/15 20:33:24 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:29:27 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int		check_access(char *argument, char **enviroment);
 /* =================== CHECKS ==================== */
 void	child(char **arguments, char **enviroment, int *fd);
 void	parent(char **arguments, char **enviroment, int pid, int *fd);
+
+
+void	parent_bonus(char **arguments, int ac, char **enviroment, int pid, int *fd);
 
 /* ============== SETTINGS COLORS ================ */
 # define BLACK "\x1B[30m"

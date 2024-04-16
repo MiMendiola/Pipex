@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes.c                                            :+:      :+:    :+:   */
+/*   pipes_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:00:35 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/15 20:34:54 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:30:37 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	child(char **arguments, char **enviroment, int *fd)
 	check_access(arguments[2], enviroment);
 }
 
-void	parent(char **arguments, char **enviroment, int pid, int *fd)
+void	parent_bonus(char **arguments, int ac, char **enviroment, int pid, int *fd)
 {
 	int	outfile;
 
@@ -37,11 +37,11 @@ void	parent(char **arguments, char **enviroment, int pid, int *fd)
 		show_error(CHILD, NULL);
 	if (pid == 0)
 	{
-		outfile = open(arguments[4], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		outfile = open(arguments[ac - 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		dup2(fd[READ_FD], STDIN_FILENO);
 		dup2(outfile, STDOUT_FILENO);
 		close(fd[READ_FD]);
-		check_access(arguments[3], enviroment);
+		check_access(arguments[ac - 2], enviroment);
 	}
 	else
 		close(fd[READ_FD]);

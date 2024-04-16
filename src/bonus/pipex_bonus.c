@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:17:08 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/15 20:34:50 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:39:33 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,42 @@ void	show_error(char *str, char *cmd_file)
 	exit(EXIT_FAILURE);
 }
 
+void	next_cmds(char **arg, int ac, char **env, int pid, int *fd)
+{
+	int fd2[2];
+	int i;
+	
+	i = 2;
+	while (++i < (ac - 2))
+	{
+		if (pipe(fd2))
+			show_error(PIPE, NULL);
+		pid = fork();
+		if (pid == -1)
+			show_error(CHILD, NULL);
+		if (pid == 0)
+		{
+			dup2(fd[READ_FD], STDIN_FILENO);
+			dup2(fd2[WRITE_FD], STDOUT_FILENO);
+			close(fd[WRITE_FD]);
+			close(fd2[WRITE_FD]);
+			close(fd2[READ_FD]);
+			check_access(arg[i], env);
+		}
+		close(fd[READ_FD]);
+		close(fd2[WRITE_FD]);
+		fd[READ_FD] = fd2[READ_FD];
+	}
+	parent_bonus(arg, ac, env, pid, fd);
+}
+
 int	main(int ac, char *av[], char *env[])
 {
 	int	fd[2];
 	int	pid[2];
 	int	status;
 
-	if (ac == 5)
+	if (ac >= 5)
 	{
 		if (pipe(fd))
 			show_error(PIPE, NULL);
@@ -44,7 +73,7 @@ int	main(int ac, char *av[], char *env[])
 		if (pid[0] == 0)
 			child(av, env, fd);
 		else
-			parent(av, env, pid[1], fd);
+			next_cmds(av, ac, env, pid[1], fd);
 		waitpid(pid[0], NULL, 0);
 		waitpid(pid[1], &status, 0);
 	}
