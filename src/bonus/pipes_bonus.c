@@ -6,13 +6,13 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:00:35 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/16 19:30:37 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:05:27 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	child(char **arguments, char **enviroment, int *fd)
+void	first_child(char **arguments, char **enviroment, int *fd)
 {
 	int	infile;
 
@@ -27,10 +27,23 @@ void	child(char **arguments, char **enviroment, int *fd)
 	check_access(arguments[2], enviroment);
 }
 
-void	parent_bonus(char **arguments, int ac, char **enviroment, int pid, int *fd)
+void	other_childs(int *fd, int *fd2)
+{
+	dup2(fd[READ_FD], STDIN_FILENO);
+	dup2(fd2[WRITE_FD], STDOUT_FILENO);
+	close(fd[WRITE_FD]);
+	close(fd2[WRITE_FD]);
+	close(fd2[READ_FD]);
+}
+
+void	parent_bonus(char **arguments, char **enviroment, int pid, int *fd)
 {
 	int	outfile;
+	int	ac;
 
+	ac = 0;
+	while (arguments[ac])
+		ac++;
 	close(fd[WRITE_FD]);
 	pid = fork();
 	if (pid == -1)

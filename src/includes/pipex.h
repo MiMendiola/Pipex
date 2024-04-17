@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:18:19 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/16 19:29:27 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:01:41 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,21 @@
 # define PIPE "pipe error"
 # define PATH "PATH="
 
+/* =================== PIPEX ===================== */
 void	show_error(char *str, char *cmd_file);
 
 /* =================== PIPES ===================== */
-char	*check_path(char **flags_cmd, char **enviroment);
-int		check_access(char *argument, char **enviroment);
-
-/* =================== CHECKS ==================== */
 void	child(char **arguments, char **enviroment, int *fd);
 void	parent(char **arguments, char **enviroment, int pid, int *fd);
 
+/* =================== CHECKS ==================== */
+char	*check_path(char **flags_cmd, char **enviroment);
+int		check_access(char *argument, char **enviroment);
 
-void	parent_bonus(char **arguments, int ac, char **enviroment, int pid, int *fd);
+/* ================= PIPES BONUS ================== */
+void	first_child(char **arguments, char **enviroment, int *fd);
+void	other_childs(int *fd, int *fd2);
+void	parent_bonus(char **arguments, char **enviroment, int pid, int *fd);
 
 /* ============== SETTINGS COLORS ================ */
 # define BLACK "\x1B[30m"
