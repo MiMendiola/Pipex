@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:17:08 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/17 14:05:58 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:18:23 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,6 @@ void	show_error(char *str, char *cmd_file)
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);
-}
-
-void	next_cmds(char **arg, char **env, int pid, int *fd)
-{
-	int	fd2[2];
-	int	ac;
-	int	i;
-
-	i = 2;
-	ac = 0;
-	while (arg[ac])
-		ac++;
-	while (++i < (ac - 2))
-	{
-		if (pipe(fd2))
-			show_error(PIPE, NULL);
-		pid = fork();
-		if (pid == -1)
-			show_error(CHILD, NULL);
-		if (pid == 0)
-		{
-			other_childs(fd, fd2);
-			check_access(arg[i], env);
-		}
-		close(fd[READ_FD]);
-		close(fd2[WRITE_FD]);
-		fd[READ_FD] = fd2[READ_FD];
-	}
-	parent_bonus(arg, env, pid, fd);
 }
 
 int	main(int ac, char *av[], char *env[])
