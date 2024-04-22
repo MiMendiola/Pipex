@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:43:33 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/03/12 17:47:48 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:14:21 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int					ft_memcmp(const void *s1, const void *s2, size_t len);
 char				*ft_strnstr(const char *str, const char *to_find,
 						size_t len);
 int					ft_atoi(const char *str);
-long				ft_atol(const char *str);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *s);
 

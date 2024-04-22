@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:17:08 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/18 13:18:23 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:30:09 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,46 @@ void	show_error(char *str, char *cmd_file)
 	exit(EXIT_FAILURE);
 }
 
+int	wait_childs(int *status, int pid)
+{
+	int	final_status = 0;
+	pid_t waited;
+		
+	while (1)
+	{
+		waited = waitpid(-1, status, 0);
+		if (waited == -1)
+			break; 
+		if (waited == pid)
+			final_status = WEXITSTATUS(*status);
+	}
+	return (final_status);
+}
+
 int	main(int ac, char *av[], char *env[])
 {
 	int	fd[2];
-	int	pid[2];
+	int	pid;
 	int	status;
+	int	final_status;
 
+	final_status = 0;
 	if (ac >= 5)
 	{
+		// if (!ft_strcmp(av[1], HERE_DOC))
+			
 		if (pipe(fd))
 			show_error(PIPE, NULL);
-		pid[0] = fork();
-		if (pid[0] == -1)
+		pid = fork();
+		if (pid == -1)
 			show_error(CHILD, NULL);
-		if (pid[0] == 0)
+		if (pid == 0)
 			first_child(av, env, fd);
 		else
-			next_cmds(av, env, pid[1], fd);
-		waitpid(pid[0], NULL, 0);
-		waitpid(pid[1], &status, 0);
+			next_cmds(av, env, &pid, fd);
+		final_status = wait_childs(&status, pid);
 	}
 	else
 		ft_putstr_fd(ARGUMENTS, 2);
-	return (WEXITSTATUS(status));
+	return (final_status);
 }
