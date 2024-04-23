@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:17:08 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/22 17:30:09 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:36:00 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,22 @@ void	show_error(char *str, char *cmd_file)
 
 int	wait_childs(int *status, int pid)
 {
-	int	final_status = 0;
+	int	final_status;
 	pid_t waited;
-		
+
+	final_status = 0;
 	while (1)
 	{
 		waited = waitpid(-1, status, 0);
 		if (waited == -1)
-			break; 
+			break;
 		if (waited == pid)
 			final_status = WEXITSTATUS(*status);
 	}
 	return (final_status);
 }
+
+
 
 int	main(int ac, char *av[], char *env[])
 {
@@ -54,7 +57,7 @@ int	main(int ac, char *av[], char *env[])
 	final_status = 0;
 	if (ac >= 5)
 	{
-		// if (!ft_strcmp(av[1], HERE_DOC))
+		if (!ft_strcmp(av[1], HERE_DOC))
 			
 		if (pipe(fd))
 			show_error(PIPE, NULL);

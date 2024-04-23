@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:18:19 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/22 17:23:04 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:22:20 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define WRITE_FD 1
 
 /* ================== MESSAGES =================== */
-# define FILE "zsh: no such file or directory: "
-# define COMMAND "zsh: command not found: "
+# define FILE "bash: no such file or directory: "
+# define COMMAND "bash: command not found: "
 # define ARGUMENTS "Error: bad number of arguments\n"
 # define CHILD "child error"
 # define PIPE "pipe error"

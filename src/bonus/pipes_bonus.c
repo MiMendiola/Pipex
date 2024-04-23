@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:00:35 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/22 17:22:47 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:19:17 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	other_childs(int *fd, int *fd2)
 	dup2(fd[READ_FD], STDIN_FILENO);
 	dup2(fd2[WRITE_FD], STDOUT_FILENO);
 	close(fd[WRITE_FD]);
-	close(fd2[WRITE_FD]);
 	close(fd2[READ_FD]);
+	close(fd2[WRITE_FD]);
 }
 
 void	connect_next_cmd(int *fd, int *fd2)
@@ -57,7 +57,7 @@ void	next_cmds(char **arg, char **env, int *pid, int *fd)
 	ac = 0;
 	while (arg[ac])
 		ac++;
-	if (!ft_strcmp(arg[1], HERE_DOC))
+	if (ft_strcmp(arg[1], HERE_DOC))
 		i++;
 	while (++i < (ac - 2))
 	{
