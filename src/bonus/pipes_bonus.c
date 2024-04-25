@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:00:35 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/23 15:19:17 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:20:51 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,15 @@ void	first_child(char **arguments, char **enviroment, int *fd)
 	int	i;
 
 	i = 1;
-	if (!ft_strcmp(arguments[1], HERE_DOC))
-		i++;		
-	infile = open(arguments[i++], O_RDONLY);
+	if (ft_strcmp(arguments[1], HERE_DOC))
+	{
+		infile = open(TMP_FILE, O_RDONLY);
+		i += 2;
+	}
+	else
+		infile = open(arguments[i++], O_RDONLY);
 	if (infile == -1)
-		show_error(FILE, arguments[--i]);
+		show_error(FILE, arguments[i]);
 	dup2(infile, STDIN_FILENO);
 	dup2(fd[WRITE_FD], STDOUT_FILENO);
 	close(infile);
@@ -90,10 +94,12 @@ void	parent_bonus(char **arguments, char **enviroment, int *pid, int *fd)
 		show_error(CHILD, NULL);
 	if (*pid == 0)
 	{
-		if (!ft_strcmp(arguments[1], HERE_DOC))
-			outfile = open(arguments[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (ft_strcmp(arguments[1], HERE_DOC))
+			outfile = open(arguments[ac - 1], O_WRONLY | O_CREAT | O_APPEND,
+					0644);
 		else
-			outfile = open(arguments[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			outfile = open(arguments[ac - 1], O_WRONLY | O_CREAT | O_TRUNC,
+					0644);
 		dup2(fd[READ_FD], STDIN_FILENO);
 		dup2(outfile, STDOUT_FILENO);
 		close(fd[READ_FD]);

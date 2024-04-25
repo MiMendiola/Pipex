@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:18:19 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/23 12:22:20 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:31:32 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define PIPE "pipe error"
 # define PATH "PATH="
 # define HERE_DOC "here_doc"
+# define TMP_FILE "/tmp/pipex_tmp"
 
 /* =================== PIPEX ===================== */
 void	show_error(char *str, char *cmd_file);
@@ -44,11 +45,14 @@ void	parent(char **arguments, char **enviroment, int pid, int *fd);
 char	*check_path(char **flags_cmd, char **enviroment);
 int		check_access(char *argument, char **enviroment);
 
-/* ================= PIPES BONUS ================== */
+/* ================= PIPES BONUS ================= */
 void	other_childs(int *fd, int *fd2);
 void	first_child(char **arguments, char **enviroment, int *fd);
 void	next_cmds(char **arg, char **env, int *pid, int *fd);
 void	parent_bonus(char **arguments, char **enviroment, int *pid, int *fd);
+
+/* =================== HERE DOC ================== */
+void	heredoc(char *args[]);
 
 /* ============== SETTINGS COLORS ================ */
 # define BLACK "\x1B[30m"

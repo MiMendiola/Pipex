@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:58:56 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/23 12:24:03 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:20:31 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*check_path(char **flags_cmd, char **enviroment)
 
 	i = 0;
 	if (!enviroment || !enviroment[0])
-		return flags_cmd[0];
+		return (flags_cmd[0]);
 	while (enviroment && enviroment[i] && ft_strncmp(enviroment[i], PATH, 5))
 		i++;
 	path = ft_split(enviroment[i] + 5, ':');

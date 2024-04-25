@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_bool.c                                   :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 20:33:25 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/25 14:20:38 by mmendiol         ###   ########.fr       */
+/*   Created: 2024/04/25 11:43:35 by mmendiol          #+#    #+#             */
+/*   Updated: 2024/04/25 14:22:11 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/pipex.h"
 
-int	ft_strchr_bool(const char *s, int c)
+void	heredoc(char *args[])
 {
-	size_t			i;
-	unsigned char	character;
+	int		infile;
+	char	*line;
+	char	*delimiter;
 
-	i = 0;
-	character = (unsigned char)c;
-	if (character == '\0')
-		return (1);
-	while (s[i])
+	infile = open(TMP_FILE, O_WRONLY | O_CREAT, 0644);
+	line = get_next_line(0);
+	delimiter = ft_strjoin(args[2], "\n");
+	while (line != NULL && !ft_strcmp(line, delimiter))
 	{
-		if (s[i] == character)
-			return (1);
-		i++;
+		ft_putstr_fd(line, infile);
+		free(line);
+		line = get_next_line(0);
 	}
-	return (0);
+	free(delimiter);
+	if (line)
+		free(line);
 }
-
-// int	main(void)
-// {
-// 	const char	*p;
-
-// 	p = "Hola Mundo";
-// 	printf("Funcion: %s", ft_strchr_bool(p, 'a'));
-// 	return (0);
-// }

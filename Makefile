@@ -13,7 +13,7 @@ RM = rm -f
 LIBFTA = libft/libft.a
 
 SRCS = $(addprefix ./src/pipex/, pipex.c pipes.c checks.c)
-SRCS_BONUS = $(addprefix ./src/bonus/, pipex_bonus.c pipes_bonus.c checks_bonus.c)
+SRCS_BONUS = $(addprefix ./src/bonus/, pipex_bonus.c pipes_bonus.c checks_bonus.c heredoc.c)
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
