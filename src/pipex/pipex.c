@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:17:08 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/22 19:14:52 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:59:35 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int ac, char *av[], char *env[])
 	int	pid[2];
 	int	status;
 
+	status = 0;
 	if (ac == 5)
 	{
 		if (pipe(fd))
@@ -44,7 +45,7 @@ int	main(int ac, char *av[], char *env[])
 		if (pid[0] == 0)
 			child(av, env, fd);
 		else
-			parent(av, env, pid[1], fd);
+			parent(av, env, &pid[1], fd);
 		waitpid(pid[0], NULL, 0);
 		waitpid(pid[1], &status, 0);
 	}

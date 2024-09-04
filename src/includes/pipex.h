@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:18:19 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/25 14:31:32 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:00:38 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 /* ================= PIPE ENDS =================== */
@@ -39,7 +41,7 @@ void	show_error(char *str, char *cmd_file);
 
 /* =================== PIPES ===================== */
 void	child(char **arguments, char **enviroment, int *fd);
-void	parent(char **arguments, char **enviroment, int pid, int *fd);
+void	parent(char **arguments, char **enviroment, int *pid, int *fd);
 
 /* =================== CHECKS ==================== */
 char	*check_path(char **flags_cmd, char **enviroment);
