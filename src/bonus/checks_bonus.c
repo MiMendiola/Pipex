@@ -6,7 +6,7 @@
 /*   By: mmendiol <mmendiol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:58:56 by mmendiol          #+#    #+#             */
-/*   Updated: 2024/04/25 14:20:31 by mmendiol         ###   ########.fr       */
+/*   Updated: 2024/09/18 20:57:36 by mmendiol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	check_access(char *argument, char **enviroment)
 	char	*command;
 
 	flags_cmd = ft_split(argument, ' ');
+	if (!flags_cmd[0])
+		show_error(COMMAND, argument);
 	if (ft_strchr(flags_cmd[0], '/'))
 		command = flags_cmd[0];
 	else
